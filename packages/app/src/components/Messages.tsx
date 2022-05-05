@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
-import socket from './socketio'
-import { NEW_MESSAGE } from './constants/socketio_events'
+import { useSocketIo } from '../contexts/SocketIo'
+import { NEW_MESSAGE } from '../constants/socketio_events'
 
 export default function Messages() {
   const [messages, setMessages] = useState<string[]>([])
+  const socket = useSocketIo()
 
   useEffect(() => {
     socket.on(NEW_MESSAGE, (message: string) => {
@@ -13,7 +14,7 @@ export default function Messages() {
     return () => {
       socket.off(NEW_MESSAGE)
     }
-  }, [])
+  }, [socket])
 
   return (
     <ul>

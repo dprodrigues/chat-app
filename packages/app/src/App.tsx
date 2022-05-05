@@ -1,26 +1,15 @@
-import { useEffect } from 'react'
-import socket from './socketio'
-import Messages from './Messages'
-import Form from './Form'
+import { useState } from 'react'
+import Username from './pages/Username'
+import Home from './pages/Home'
 
 function App() {
-  useEffect(() => {
-    socket.on('connect', () => {
-      console.log(socket.id)
-    })
+  const [username, setUsername] = useState('')
 
-    return () => {
-      socket.close()
-    }
-  }, [])
+  if (!username) {
+    return <Username setUsername={setUsername} />
+  }
 
-  return (
-    <section>
-      <Messages />
-
-      <Form />
-    </section>
-  )
+  return <Home />
 }
 
 export default App

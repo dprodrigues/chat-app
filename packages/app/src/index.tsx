@@ -1,12 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { SocketIoProvider } from './contexts/SocketIo'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <App />
+    <SocketIoProvider>
+      <App />
+    </SocketIoProvider>
   </React.StrictMode>
 )
 

@@ -1,9 +1,10 @@
 import { FormEvent, ChangeEvent, useState } from 'react'
-import socket from './socketio'
-import { SEND_MESSAGE } from './constants/socketio_events'
+import { useSocketIo } from '../contexts/SocketIo'
+import { SEND_MESSAGE } from '../constants/socketio_events'
 
 export default function Form() {
   const [value, setValue] = useState('')
+  const socket = useSocketIo()
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
