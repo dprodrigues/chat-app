@@ -1,6 +1,6 @@
 const { Server } = require('socket.io')
 
-const users = []
+let users = []
 
 module.exports = (httpServer) => {
   const io = new Server(httpServer, {
@@ -10,24 +10,19 @@ module.exports = (httpServer) => {
   })
 
   io.on('connection', (socket) => {
-    users.push(socket)
-
-    console.log('user %s connected', socket.id)
-
     socket.on('disconnect', () => {
-      const index = users.findIndex((user) => user.id === socket.id)
-
-      if (index !== -1) {
-        users.splice(index, 1)
-      }
-
-      console.log('user %s disconnected', socket.id)
+      users = users.filter((filter) => filter.id !== socket.id)
+      io.sockets.emit('new-user', users)
     })
 
     socket.on('send-message', (message) => {
-      console.log('message:', message)
-
       io.sockets.emit('new-message', message)
+    })
+
+    socket.on('set-user', (user) => {
+      users.push({ id: socket.id, name: user })
+
+      io.sockets.emit('new-user', users)
     })
   })
 }
