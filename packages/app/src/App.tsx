@@ -1,13 +1,11 @@
-import { useState } from 'react'
+import { useUser } from './contexts/User'
 import Username from './pages/Username'
 import Home from './pages/Home'
 
 function App() {
-  const [username, setUsername] = useState('')
+  const { user } = useUser()
 
-  if (!username) {
-    return <Username setUsername={setUsername} />
-  }
+  if (!user) return <Username />
 
   return <Home />
 }

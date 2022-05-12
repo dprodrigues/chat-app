@@ -3,13 +3,16 @@ import ReactDOM from 'react-dom/client'
 import { SocketIoProvider } from './contexts/SocketIo'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { UserProvider } from './contexts/User'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <SocketIoProvider>
-      <App />
-    </SocketIoProvider>
+    <UserProvider>
+      <SocketIoProvider>
+        <App />
+      </SocketIoProvider>
+    </UserProvider>
   </React.StrictMode>
 )
 

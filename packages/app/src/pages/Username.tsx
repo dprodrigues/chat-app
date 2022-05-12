@@ -1,20 +1,18 @@
-import { Dispatch, SetStateAction, FormEvent, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useSocketIo } from '../contexts/SocketIo'
-import { SET_USERNAME } from '../constants/socketio_events'
+import { useUser } from '../contexts/User'
+import { SET_USER } from '../constants/socketio_events'
 
-interface IUsernameProps {
-  setUsername: Dispatch<SetStateAction<string>>
-}
-
-export default function Username({ setUsername }: IUsernameProps) {
+export default function Username() {
   const [value, setValue] = useState('')
   const socket = useSocketIo()
+  const { setUser } = useUser()
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    socket.emit(SET_USERNAME, value)
-    setUsername(value)
+    socket.emit(SET_USER, value)
+    setUser(value)
   }
 
   return (
@@ -24,6 +22,7 @@ export default function Username({ setUsername }: IUsernameProps) {
           <legend>Username</legend>
 
           <input
+            autoFocus
             type="text"
             value={value}
             onChange={(event) => setValue(event.target.value)}
